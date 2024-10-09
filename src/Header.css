@@ -4,15 +4,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 0px;
-    position: fixed;
+    height: 10vh;
+    position: relative;
     width: 100%;
-}
-
-.opoil-header img {
-    width: 12%;
-    height: auto;
-    margin-right: 50px;
-    padding: 0px 30px;
 }
 
 .opoil-header h1 {
