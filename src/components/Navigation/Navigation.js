@@ -1,7 +1,7 @@
 import './Navigation.css';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import Session from "react-session-api/src";
+import Cookies from "js-cookie";
 
 function Navigation({menuOpen, setMenuOpen}) {
 
@@ -9,7 +9,7 @@ function Navigation({menuOpen, setMenuOpen}) {
         menuOpen ? OpenMenu() : CloseMenu()
     }, [menuOpen])
 
-    const user = Session.get("user");
+    const user = Cookies.get("token");
 
     const OpenMenu = () => {
         document.getElementById("menu-nav-div").style.cssText = "right: 0; visibility: visible;";
@@ -42,14 +42,25 @@ function Navigation({menuOpen, setMenuOpen}) {
                             onClick={()=>{setMenuOpen(false)}}>Mes demandes</NavLink>
                         </li>
                         {user ?
-                            <li><NavLink
-                                to="/compte"
-                                className={({ isActive }) => isActive ? "choice choice-active" : "choice" }
-                                onClick={()=>{setMenuOpen(false)}}>Mon compte</NavLink>
-                            </li>
+                            <>
+                                <li><NavLink
+                                    to="/compte"
+                                    className={({ isActive }) => isActive ? "choice choice-active" : "choice" }
+                                    onClick={()=>{setMenuOpen(false)}}>Mon compte</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to="/"
+                                        className="choice"
+                                        onClick={()=>{
+                                            Cookies.remove("token");
+                                            setMenuOpen(false);
+                                        }}>Se déconnecter</NavLink>
+                                </li>
+                            </>
                         :
                             <li><NavLink
-                                to="/inscription"
+                                to="/connexion"
                                 className={({ isActive }) => isActive ? "choice choice-active" : "choice" }
                                 onClick={()=>{setMenuOpen(false)}}>Se connecter</NavLink>
                             </li>

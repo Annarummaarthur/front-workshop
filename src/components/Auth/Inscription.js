@@ -3,6 +3,7 @@ import axios from 'axios';
 import Session from "react-session-api/src";
 import {environment} from "../../environment";
 import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 function Inscription() {
     const [formData, setFormData] = useState({
@@ -25,11 +26,10 @@ function Inscription() {
     };
 
     const handleSubmit = (e) => {
-        Session.set("user", {username: formData.username, email: formData.email});
         e.preventDefault();
         axios.post(`${environment.apiUrl}auth/register`, formData)
             .then(response => {
-                Session.set("user", response.data);
+                Cookies.set('token', response.data.token.token);
                 navigate('/');
             })
             .catch(error => {

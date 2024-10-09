@@ -3,7 +3,7 @@ import logo from './img/logo.png';
 import Navigation from './components/Navigation/Navigation';
 import { useState } from 'react';
 
-function Header() {
+function Header({ user }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -23,7 +23,7 @@ function Header() {
                     <div></div>
                 </div>
             </header>
-            <Navigation menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+            <Navigation menuOpen={menuOpen} setMenuOpen={setMenuOpen} user={user}/>
         </>
     );
 }
