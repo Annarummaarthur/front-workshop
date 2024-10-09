@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import Inscription from "./components/Auth/Inscription";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
 
         <Routes>
           <Route exact path="/" element={<Accueil />} />
+          <Route path="/inscription" element={<Inscription />} />
         </Routes>
       </div>
     </Router>
