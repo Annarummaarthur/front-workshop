@@ -17,10 +17,7 @@ function Accueil() {
             }
         }).then(response => {
             setUser(response.data);
-            console.log(response.data);
-        }).catch(error => {
-            console.log(error);
-        });
+        })
     });
 
     return (
