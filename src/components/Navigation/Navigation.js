@@ -1,15 +1,15 @@
 import './Navigation.css';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import Cookies from "js-cookie";
 
-function Navigation({menuOpen, setMenuOpen}) {
+function Navigation({menuOpen, setMenuOpen, user}) {
 
     useEffect(() => {
         menuOpen ? OpenMenu() : CloseMenu()
     }, [menuOpen])
 
-    const user = Cookies.get("token");
+    const token = Cookies.get("token");
 
     const OpenMenu = () => {
         document.getElementById("menu-nav-div").style.cssText = "right: 0; visibility: visible;";
@@ -25,7 +25,7 @@ function Navigation({menuOpen, setMenuOpen}) {
         <>
             <div className='menu-nav-div' id='menu-nav-div'>
                 <div className='menu-nav'>
-                    
+
                     <div className="burger-menu-close" onClick={CloseMenu}>
                         <div className='div1'></div>
                         <div className='div2'></div>
@@ -36,16 +36,31 @@ function Navigation({menuOpen, setMenuOpen}) {
                             className={({ isActive }) => isActive ? "choice choice-active" : "choice" }
                             onClick={()=>{setMenuOpen(false)}}>Accueil</NavLink>
                         </li>
-                        <li><NavLink
-                            to="/demandes/list"
-                            className={({ isActive }) => isActive ? "choice choice-active" : "choice" }
-                            onClick={()=>{setMenuOpen(false)}}>Mes demandes</NavLink>
-                        </li>
-                        {user ?
+                        { token && user && user.role === 'ROLE_USER' ?
+                            <li><NavLink
+                                to="/demandes/list"
+                                className={({isActive}) => isActive ? "choice choice-active" : "choice"}
+                                onClick={() => {
+                                    setMenuOpen(false)
+                                }}>Mes demandes</NavLink>
+                            </li>
+                            : null
+                        }
+                        { token && user && user.role === 'ROLE_VETO' ?
+                            <li><NavLink
+                                to="/posts"
+                                className={({isActive}) => isActive ? "choice choice-active" : "choice"}
+                                onClick={() => {
+                                    setMenuOpen(false)
+                                }}>Demandes à traiter</NavLink>
+                            </li> : null
+                        }
+
+                        {token ?
                             <>
                                 <li><NavLink
                                     to="/compte"
-                                    className={({ isActive }) => isActive ? "choice choice-active" : "choice" }
+                                    className={({isActive}) => isActive ? "choice choice-active" : "choice" }
                                     onClick={()=>{setMenuOpen(false)}}>Mon compte</NavLink>
                                 </li>
                                 <li>

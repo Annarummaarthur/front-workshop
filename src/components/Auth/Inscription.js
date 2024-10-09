@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Session from "react-session-api/src";
 import {environment} from "../../environment";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
