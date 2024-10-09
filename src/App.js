@@ -36,10 +36,10 @@ function App() {
     return (
         <Router>
             <div className="reactor">
-                <Header />
+                <Header user={user} />
 
                 <Routes>
-                    <Route exact path="/" element={<Accueil />} />
+                    <Route exact path="/" element={<Accueil user={user} />} />
                     <Route path="/inscription" element={<Inscription />} />
                     <Route path="/connexion" element={<Login />} />
                     <Route path="/compte" element={<PrivateRoute element={<Profile />} />} />

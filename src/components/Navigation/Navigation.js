@@ -1,33 +1,15 @@
 import './Navigation.css';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import Cookies from "js-cookie";
-import axios from "axios";
-import {environment} from "../../environment";
 
-function Navigation({menuOpen, setMenuOpen}) {
+function Navigation({menuOpen, setMenuOpen, user}) {
 
     useEffect(() => {
         menuOpen ? OpenMenu() : CloseMenu()
     }, [menuOpen])
 
     const token = Cookies.get("token");
-
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        if (!token) {
-            setUser(null);
-            return;
-        }
-        axios.post(`${environment.apiUrl}auth/profile`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(response => {
-            setUser(response.data);
-        })
-    }, [token]);
 
     const OpenMenu = () => {
         document.getElementById("menu-nav-div").style.cssText = "right: 0; visibility: visible;";
@@ -54,7 +36,7 @@ function Navigation({menuOpen, setMenuOpen}) {
                             className={({ isActive }) => isActive ? "choice choice-active" : "choice" }
                             onClick={()=>{setMenuOpen(false)}}>Accueil</NavLink>
                         </li>
-                        { user && user.role === 'ROLE_USER' ?
+                        { token && user && user.role === 'ROLE_USER' ?
                             <li><NavLink
                                 to="/demandes/list"
                                 className={({isActive}) => isActive ? "choice choice-active" : "choice"}
@@ -64,7 +46,7 @@ function Navigation({menuOpen, setMenuOpen}) {
                             </li>
                             : null
                         }
-                        { user && user.role === 'ROLE_VETO' ?
+                        { token && user && user.role === 'ROLE_VETO' ?
                             <li><NavLink
                                 to="/posts"
                                 className={({isActive}) => isActive ? "choice choice-active" : "choice"}
@@ -87,7 +69,6 @@ function Navigation({menuOpen, setMenuOpen}) {
                                         className="choice"
                                         onClick={()=>{
                                             Cookies.remove("token");
-                                            setUser(null);
                                             setMenuOpen(false);
                                         }}>Se déconnecter</NavLink>
                                 </li>
