@@ -9,7 +9,7 @@ function Accueil({user}) {
     return (
         <main className="opoil-Accueil">
             <div className='center-col'>
-                {token ? <h1 className="text-4xl my-5">Bienvenue, {user.firstName}</h1> : <h1 className="text-4xl my-5">Bienvenue sur O'Poil</h1>}
+                {token && user ? <h1 className="text-4xl my-5">Bienvenue, {user.firstName}</h1> : <h1 className="text-4xl my-5">Bienvenue sur O'Poil</h1>}
                 <div className='div-img-Accueil'>
                     <img
                         src='https://www.veterinaire-monveto.com/wp-content/uploads/2023/11/TRAME-CLINIQUE-HEADER2-2.png'
