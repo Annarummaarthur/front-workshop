@@ -35,7 +35,6 @@ function Accueil({user}) {
                 ) : (
                     <BtnBase nav='/inscription' name='Inscription' />
                 )}
-                <button className="accueil" onClick={() => navigate('/inscription')}>Inscription</button>
             </div>
         </main>
     );
