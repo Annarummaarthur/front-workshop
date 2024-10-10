@@ -8,16 +8,8 @@ import { environment } from '../../environment';
 function Mes_Demande() {
     const [posts, setPosts] = useState([]);
     const token = Cookies.get("token");
-    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        axios.post(`${environment.apiUrl}auth/profile`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(response => {
-            setUser(response.data);
-        });
         const fetchPosts = async () => {
             try {
                 const response = await axios.get(`${environment.apiUrl}posts/allPosts`, {
