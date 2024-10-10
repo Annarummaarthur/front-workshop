@@ -13,6 +13,7 @@ import PostList from "./components/Veterinarian/PostList";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import {UserContext} from "./Contexts/UserContext";
 import {useContext} from "react";
+import Create_Demande from "./pages/Create_Demande/Create_Demande";
 
 function App() {
     const { user, loading, error } = useContext(UserContext);
@@ -39,6 +40,7 @@ function App() {
                     <Route path="/demandes/list" element={user && user.role === 'ROLE_USER' ? <PrivateRoute element={<Mes_Demande />} /> : <Navigate to="/" />} />
                     <Route exact path="/posts" element={user && user.role === 'ROLE_VETO' ? <PrivateRoute element={<PostList user={user} finished={false}/>} /> : <Navigate to='/'/>} />
                     <Route exact path="/advices" element={user && user.role === 'ROLE_VETO' ? <PrivateRoute element={<PostList user={user} finished={true}/>} /> : <Navigate to='/'/>} />
+                    <Route path="/demandes/create" element={user && user.role === 'ROLE_USER' ? <PrivateRoute element={<Create_Demande user={user} />} /> : <Navigate to="/" />} />
                 </Routes>
             </div>
             : null}
