@@ -64,14 +64,14 @@ function Mes_Demande() {
                             <td>{post.title}</td>
                             <td>{post.description}</td>
                             <td>
-                                {post.repondu ? (
-                                    <span style={{ color: 'red', fontWeight: 'bold' }}>✖</span> // Croix rouge
+                                {post.adviceId ? (
+                                    <span style={{ color: 'red', fontWeight: 'bold' }}>✖</span>
                                 ) : (
                                     <button>Modifier</button>
                                 )}
                             </td>
                             <td>
-                                {post.repondu ? (
+                                {post.adviceId ? (
                                     <button onClick={() => handleResponseClick(post.veterinaire)}>
                                         Répondu
                                     </button>
