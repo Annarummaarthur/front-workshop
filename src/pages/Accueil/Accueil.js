@@ -7,7 +7,7 @@ function Accueil({user}) {
     const navigate = useNavigate();
 
     return (
-        <main className="opoil-Accueil">
+        <main className="flex justify-center flex-col items-center">
             <div className='center-col'>
                 {token && user ? <h1 className="text-4xl my-5">Bienvenue, {user.firstName}</h1> : <h1 className="text-4xl my-5">Bienvenue sur O'Poil</h1>}
                 <div className='div-img-Accueil'>
@@ -32,6 +32,7 @@ function Accueil({user}) {
                         </>
 
                     :
+
                     <button className="accueil" onClick={() => navigate('/inscription')}>Inscription</button>
                 }
             </div>
