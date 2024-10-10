@@ -12,7 +12,8 @@ function Accueil() {
             </div>
             <div className='center-col'>
                 <div className='p-Accueil'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a efficitur enim, nec lobortis neque. Nulla at scelerisque dui. Integer bibendum iaculis justo quis dictum.    
+                O'Poil est là pour vous faciliter la tâche de la prise de rendez-vous à la consultation. 
+                  
                 </div>
                 <div>
                     <button>Demande de rendez-vous</button>
