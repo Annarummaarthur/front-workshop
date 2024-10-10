@@ -1,15 +1,17 @@
 import './Navigation.css';
-import {useEffect} from 'react';
+import {useEffect, useContext} from 'react';
 import { NavLink } from 'react-router-dom';
 import Cookies from "js-cookie";
+import { UserContext } from "../../Contexts/UserContext";
 
-function Navigation({menuOpen, setMenuOpen, user}) {
+function Navigation({menuOpen, setMenuOpen}) {
 
     useEffect(() => {
         menuOpen ? OpenMenu() : CloseMenu()
     }, [menuOpen])
 
     const token = Cookies.get("token");
+    const { user, setUser } = useContext(UserContext);
 
     const OpenMenu = () => {
         document.getElementById("menu-nav-div").style.cssText = "right: 0; visibility: visible;";
@@ -80,6 +82,7 @@ function Navigation({menuOpen, setMenuOpen, user}) {
                                         className="choice"
                                         onClick={()=>{
                                             Cookies.remove("token");
+                                            setUser(null);
                                             setMenuOpen(false);
                                         }}>Se déconnecter</NavLink>
                                 </li>

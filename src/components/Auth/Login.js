@@ -1,9 +1,10 @@
 // src/components/Auth/Login.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { environment } from "../../environment";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from '../../Contexts/UserContext';
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ function Login() {
 
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,6 +29,7 @@ function Login() {
         axios.post(`${environment.apiUrl}auth/login`, formData)
             .then(response => {
                 Cookies.set('token', response.data.token.token);
+                setUser(response.data.user); // Set the user context
                 navigate('/');
             })
             .catch(error => {
