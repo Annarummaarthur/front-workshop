@@ -20,7 +20,7 @@ function Accueil({user}) {
             </div>
             <div className='center-col'>
                 <div className='p-Accueil'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a efficitur enim, nec lobortis neque. Nulla at scelerisque dui. Integer bibendum iaculis justo quis dictum.    
+                Que vous soyez un propriétaire d'animal de compagnie à la recherche de soins experts ou un vétérinaire souhaitant proposer vos services, O'Poil est là pour vous faciliter la tâche.    
                 </div>
                 {token ? (
                     <>
