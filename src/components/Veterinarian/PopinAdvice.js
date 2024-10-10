@@ -17,7 +17,7 @@ function PopinAdvice({ advice, isOpen, onClose, onSubmit }) {
             <div className="bg-white p-6 rounded-lg shadow-lg relative w-96 max-w-full">
                 <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onClick={onClose}><i
                     className="fas fa-times m-1"></i></button>
-                <h2 className="text-xl font-semibold mb-4">Donner un avis</h2>
+                <h2 className="text-xl font-semibold mb-4">{advice ? "Modifier l'avis" : 'Donner un avis'}</h2>
                 <form onSubmit={handleSubmit}>
                     <textarea
                         value={comment}
