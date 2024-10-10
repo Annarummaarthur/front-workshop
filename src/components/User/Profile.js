@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { environment } from "../../environment";
-import axios from "axios";
-import Cookies from "js-cookie";
+import React from 'react';
 import AnimalForm from "./AnimalForm";
 
 function Profile({ user }) {
-    const [, setLoading] = useState(true);
-    const token = Cookies.get("token");
 
     if (!user) {
         return <p>Vous n'êtes pas connecté.</p>;

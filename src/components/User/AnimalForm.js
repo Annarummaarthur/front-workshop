@@ -13,7 +13,7 @@ function AnimalForm() {
 
     const [message, setMessage] = useState('');
     const [animals, setAnimals] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [, setLoading] = useState(true);
     const { user, addAnimal } = useContext(UserContext);
 
     const handleChange = (e) => {

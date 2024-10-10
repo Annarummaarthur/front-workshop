@@ -7,7 +7,7 @@ import { environment } from "../../environment";
 function Create_Demande({user}) {
     const token = Cookies.get("token");
     const navigate = useNavigate();
-    const [message, setMessage] = useState('');
+    const [, setMessage] = useState('');
     const [Animals, setAnimals] = useState([]);
     const [formData, setFormData] = useState({
         title: '',
