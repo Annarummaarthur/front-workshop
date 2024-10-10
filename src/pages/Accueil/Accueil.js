@@ -1,11 +1,9 @@
 import './Accueil.css';
 import Cookies from "js-cookie";
-import {useNavigate} from "react-router-dom";
 import BtnBase from "../../components/btn_base/btn_base";
 
 function Accueil({user}) {
     const token = Cookies.get("token");
-    const navigate = useNavigate();
 
     return (
         <main className="flex justify-center flex-col items-center">

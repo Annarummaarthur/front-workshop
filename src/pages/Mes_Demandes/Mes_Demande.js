@@ -6,18 +6,20 @@ import React, { useEffect, useState } from 'react';
 import { environment } from '../../environment';
 import { format} from 'date-fns'
 
-function Mes_Demande() {
+function Mes_Demande({user}) {
     const [posts, setPosts] = useState([]);
     const token = Cookies.get("token");
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get(`${environment.apiUrl}posts/allPosts`, {
+                const response = await axios.post(`${environment.apiUrl}posts/allPostsByUser`, {
+                    user_id: user.id
+                },{
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
-                });
+            });
                 setPosts(response.data);
             } catch (error) {
                 console.error('Error fetching posts:', error);
@@ -47,6 +49,7 @@ function Mes_Demande() {
                         <th>Description</th>
                         <th>Modification</th>
                         <th>Réponse</th>
+                        <th>Avis</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,6 +73,13 @@ function Mes_Demande() {
                                 ) : (
                                     <span style={{ color: 'red', fontWeight: 'bold' }}>✖</span>
                                 )}
+                            </td>
+                            <td>
+                                {post.advice ?
+                                    <p>{post.advice.comment}</p>
+                                    :
+                                    null
+                                }
                             </td>
                         </tr>
                     ))}

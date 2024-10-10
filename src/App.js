@@ -37,7 +37,7 @@ function App() {
                     <Route path="/inscription" element={<Inscription />} />
                     <Route path="/connexion" element={<Login />} />
                     <Route path="/compte" element={<PrivateRoute element={<Profile user={user} />} />} />
-                    <Route path="/demandes/list" element={user && user.role === 'ROLE_USER' ? <PrivateRoute element={<Mes_Demande />} /> : <Navigate to="/" />} />
+                    <Route path="/demandes/list" element={user && user.role === 'ROLE_USER' ? <PrivateRoute element={<Mes_Demande user={user} />} /> : <Navigate to="/" />} />
                     <Route exact path="/posts" element={user && user.role === 'ROLE_VETO' ? <PrivateRoute element={<PostList user={user} finished={false}/>} /> : <Navigate to='/'/>} />
                     <Route exact path="/advices" element={user && user.role === 'ROLE_VETO' ? <PrivateRoute element={<PostList user={user} finished={true}/>} /> : <Navigate to='/'/>} />
                     <Route path="/demandes/create" element={user && user.role === 'ROLE_USER' ? <PrivateRoute element={<Create_Demande user={user} />} /> : <Navigate to="/" />} />
