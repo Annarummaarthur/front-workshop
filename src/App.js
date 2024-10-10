@@ -20,6 +20,7 @@ function App() {
 
     const token = Cookies.get("token");
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (token) {
@@ -29,24 +30,30 @@ function App() {
                 }
             }).then(response => {
                 setUser(response.data);
+                setLoading(false);
             })
         }
     }, [token]);
 
     return (
         <Router>
-            <div className="reactor">
-                <Header user={user} />
+            {!loading ?
+                <div className="reactor">
+                    <Header user={user} />
 
-                <Routes>
-                    <Route exact path="/" element={<Accueil user={user} />} />
-                    <Route path="/inscription" element={<Inscription />} />
-                    <Route path="/connexion" element={<Login />} />
-                    <Route path="/compte" element={<PrivateRoute element={<Profile />} />} />
-                    <Route path="/demandes/list" element={user && user.role === 'ROLE_USER' ? <PrivateRoute element={<Mes_Demande />} /> : <Navigate to="/" />} />
-                    <Route path="/posts" element={<PrivateRoute element={<PostList />} />} />
-                </Routes>
-            </div>
+                    <Routes>
+                        <Route exact path="/" element={<Accueil user={user} />} />
+                        <Route path="/inscription" element={<Inscription />} />
+                        <Route path="/connexion" element={<Login />} />
+                        <Route path="/compte" element={<PrivateRoute element={<Profile />} />} />
+                        <Route path="/demandes/list" element={user && user.role === 'ROLE_USER' ? <PrivateRoute element={<Mes_Demande />} /> : <Navigate to="/" />} />
+                        <Route exact path="/posts" element={user && user.role === 'ROLE_VETO' ? <PrivateRoute element={<PostList user={user} finished={false}/>} /> : <Navigate to='/'/>} />
+                        <Route exact path="/advices" element={user && user.role === 'ROLE_VETO' ? <PrivateRoute element={<PostList user={user} finished={true}/>} /> : <Navigate to='/'/>} />
+                    </Routes>
+                </div>
+                :
+                null
+            }
         </Router>
     );
 }

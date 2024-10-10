@@ -47,20 +47,31 @@ function Navigation({menuOpen, setMenuOpen, user}) {
                             : null
                         }
                         { token && user && user.role === 'ROLE_VETO' ?
-                            <li><NavLink
-                                to="/posts"
-                                className={({isActive}) => isActive ? "choice choice-active" : "choice"}
-                                onClick={() => {
-                                    setMenuOpen(false)
-                                }}>Demandes à traiter</NavLink>
-                            </li> : null
+                            <>
+                                <li><NavLink
+                                    to="/posts"
+                                    className={({isActive}) => isActive ? "choice choice-active" : "choice"}
+                                    onClick={() => {
+                                        setMenuOpen(false)
+                                    }}>Demandes à traiter</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to="/advices"
+                                        className={({isActive}) => isActive ? "choice choice-active" : "choice"}
+                                        onClick={() => {
+                                            setMenuOpen(false)
+                                        }}>Demandes traitées</NavLink>
+                                </li>
+                            </>
+                            : null
                         }
 
                         {token ?
                             <>
                                 <li><NavLink
                                     to="/compte"
-                                    className={({isActive}) => isActive ? "choice choice-active" : "choice" }
+                                    className={({isActive}) => isActive ? "choice choice-active" : "choice"}
                                     onClick={()=>{setMenuOpen(false)}}>Mon compte</NavLink>
                                 </li>
                                 <li>

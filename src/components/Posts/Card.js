@@ -5,7 +5,7 @@ import axios from 'axios';
 import { environment } from '../../environment';
 import Cookies from 'js-cookie';
 
-function SquareCard({ id, title, description, user }) {
+function SquareCard({ id, title, description, user, finished, advice }) {
     const [isPopinOpen, setIsPopinOpen] = useState(false);
     const token = Cookies.get('token');
 
@@ -43,16 +43,44 @@ function SquareCard({ id, title, description, user }) {
         <div className="relative p-4 m-4 w-72 h-72 shadow-xl rounded-lg border border-transparent hover:border-emerald-400 transition-all">
             <h2 className="text-xl text-center font-semibold mb-2">{title}</h2>
             <p className="text-gray-600 break-words">{truncatedDescription}</p>
-            <button
-                onClick={handleOpenPopin}
-                className="absolute bottom-4 transition-all right-4 bg-emerald-500 hover:bg-emerald-400 hover:scale-105 text-white font-bold py-2 px-4 rounded">
-                Donner un avis
-            </button>
-            <PopinAdvice
-                isOpen={isPopinOpen}
-                onClose={handleClosePopin}
-                onSubmit={handleSubmitAdvice}
-            />
+            {!finished ?
+                <>
+                    <button
+                        onClick={handleOpenPopin}
+                        className="absolute bottom-4 transition-all right-4 bg-emerald-500 hover:bg-emerald-400 hover:scale-105 text-white font-bold py-2 px-4 rounded">
+                        Donner un avis
+                    </button>
+                    <PopinAdvice
+                        advice={null}
+                        isOpen={isPopinOpen}
+                        onClose={handleClosePopin}
+                        onSubmit={handleSubmitAdvice}
+                    />
+                </>
+                :
+                <>
+                    {advice ?
+                        <>
+                            <button
+                                onClick={handleOpenPopin}
+                                className="absolute bottom-4 transition-all right-4 bg-emerald-500 hover:bg-emerald-400 hover:scale-105 text-white font-bold py-2 px-4 rounded">
+                                Modifier l'avis
+                            </button>
+                            <PopinAdvice
+                                advice={advice}
+                                isOpen={isPopinOpen}
+                                onClose={handleClosePopin}
+                                onSubmit={handleSubmitAdvice}
+                            />
+                        </>
+
+                        :
+                        <div className="absolute bottom-4 right-4 bg-red-500 text-white font-bold py-2 px-4 rounded">
+                            Avis non donné
+                        </div>
+                    }
+                </>
+            }
         </div>
     );
 }
