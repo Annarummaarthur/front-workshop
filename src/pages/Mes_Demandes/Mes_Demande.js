@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { environment } from '../../environment';
+import { format} from 'date-fns'
 
 function Mes_Demande() {
     const [posts, setPosts] = useState([]);
@@ -34,6 +35,7 @@ function Mes_Demande() {
         fetchPosts();
     }, [token]);
 
+
     const handleResponseClick = (veterinaire) => {
         alert(`Réponse pour ${veterinaire} traitée.`);
     };
@@ -49,16 +51,18 @@ function Mes_Demande() {
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Vétérinaire</th>
-                        <th>Modifier</th>
+                        <th>Titre</th>
+                        <th>Description</th>
+                        <th>Modification</th>
                         <th>Réponse</th>
                     </tr>
                 </thead>
                 <tbody>
                     {posts.map(post => (
                         <tr key={post.id}>
-                            <td>{post.created_at}</td>
+                            <td>{format(new Date(post.createdAt), 'd/M/Y')}</td>
                             <td>{post.title}</td>
+                            <td>{post.description}</td>
                             <td>
                                 {post.repondu ? (
                                     <span style={{ color: 'red', fontWeight: 'bold' }}>✖</span> // Croix rouge
