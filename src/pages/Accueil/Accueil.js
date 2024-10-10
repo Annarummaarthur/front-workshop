@@ -1,6 +1,7 @@
 import './Accueil.css';
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
+import BtnBase from "../../components/btn_base/btn_base";
 
 function Accueil({user}) {
     const token = Cookies.get("token");
@@ -21,19 +22,19 @@ function Accueil({user}) {
                 <div className='p-Accueil'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a efficitur enim, nec lobortis neque. Nulla at scelerisque dui. Integer bibendum iaculis justo quis dictum.    
                 </div>
-                { token ?
+                {token ? (
                     <>
-                        {user && user.role === 'ROLE_USER' ? <button onClick={() => navigate('/demandes/list')} className="accueil">Voir mes demandes</button>
-                            : null
-                        }
-                        {user && user.role === 'ROLE_VETO' ? <button onClick={() => navigate('/posts')} className="accueil">Voir les demandes</button>
-                            : null
-                        }
-                        </>
+                        {user && user.role === 'ROLE_USER' ? 
+                            <BtnBase nav='/demandes/list' name='Voir mes demandes' /> 
+                        : null}
 
-                    :
-                    <button className="accueil" onClick={() => navigate('/inscription')}>Inscription</button>
-                }
+                        {user && user.role === 'ROLE_VETO' ? 
+                            <BtnBase nav='/posts' name='Voir les demandes' />
+                        : null}
+                    </>
+                ) : (
+                    <BtnBase nav='/inscription' name='Inscription' />
+                )}
             </div>
         </main>
     );

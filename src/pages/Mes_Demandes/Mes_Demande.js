@@ -1,10 +1,38 @@
 import './Mes_Demande.css';
+import BtnBase from "../../components/btn_base/btn_base";
+import Cookies from "js-cookie";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { environment } from '../../environment';
 
 function Mes_Demande() {
-    const demandes = [
-        { date: '01/01/2024', veterinaire: 'Dr. Dupont', repondu: true },
-        { date: '05/01/2024', veterinaire: 'Dr. Martin', repondu: false },
-    ];
+    const [posts, setPosts] = useState([]);
+    const token = Cookies.get("token");
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        axios.post(`${environment.apiUrl}auth/profile`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            setUser(response.data);
+        });
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get(`${environment.apiUrl}posts/allPosts`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setPosts(response.data);
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+        };
+
+        fetchPosts();
+    }, [token]);
 
     const handleResponseClick = (veterinaire) => {
         alert(`Réponse pour ${veterinaire} traitée.`);
@@ -14,7 +42,7 @@ function Mes_Demande() {
         <main className="opoil-Mes-demandes">
             <div className='div-new-demande'>
                 <h1>Mes demandes</h1>
-                <button>Créer une demande</button>
+                <BtnBase nav='/demandes/create' name='Créer une demande' />
             </div>
             
             <table className="demande-table">
@@ -27,20 +55,20 @@ function Mes_Demande() {
                     </tr>
                 </thead>
                 <tbody>
-                    {demandes.map((demande, index) => (
-                        <tr key={index}>
-                            <td>{demande.date}</td>
-                            <td>{demande.veterinaire}</td>
+                    {posts.map(post => (
+                        <tr key={post.id}>
+                            <td>{post.created_at}</td>
+                            <td>{post.title}</td>
                             <td>
-                                {demande.repondu ? (
+                                {post.repondu ? (
                                     <span style={{ color: 'red', fontWeight: 'bold' }}>✖</span> // Croix rouge
                                 ) : (
                                     <button>Modifier</button>
                                 )}
                             </td>
                             <td>
-                                {demande.repondu ? (
-                                    <button onClick={() => handleResponseClick(demande.veterinaire)}>
+                                {post.repondu ? (
+                                    <button onClick={() => handleResponseClick(post.veterinaire)}>
                                         Répondu
                                     </button>
                                 ) : (
