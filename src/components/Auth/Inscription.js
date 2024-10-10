@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import {environment} from "../../environment";
-import {useNavigate} from "react-router-dom";
+import { environment } from "../../environment";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { UserContext } from "../../Contexts/UserContext";
 
 function Inscription() {
     const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ function Inscription() {
 
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,11 +30,21 @@ function Inscription() {
         e.preventDefault();
         axios.post(`${environment.apiUrl}auth/register`, formData)
             .then(response => {
-                Cookies.set('token', response.data.token.token);
-                navigate('/');
+                axios.post(`${environment.apiUrl}auth/login`, {
+                    email: formData.email,
+                    password: formData.password
+                }).then(response => {
+                    setUser(response.data.user);
+                    Cookies.set('token', response.data.token.token);
+                    navigate('/');
+                }).catch(error => {
+                    console.error('Login error:', error);
+                    setMessage("Login failed after registration.");
+                });
             })
             .catch(error => {
-                setMessage('Erreurs dans le formulaire !');
+                let errorMessage = error.response.data.errors[0].message;
+                setMessage(errorMessage);
             });
     };
 
