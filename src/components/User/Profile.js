@@ -36,7 +36,7 @@ function Profile({ user }) {
                         <p className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">{user.email}</p>
                     </div>
                 </div>
-                {user && user.role === 'ROLE_VETO' ? <AnimalForm /> : null}
+                {user && user.role === 'ROLE_USER' ? <AnimalForm /> : null}
             </div>
         </main>
     );

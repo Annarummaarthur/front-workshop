@@ -85,7 +85,7 @@ function AnimalForm() {
                 <button type="submit" className="m-0 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">Enregistrer l'animal</button>
                 {message && <p className="mt-4 text-red-500">{message}</p>}
             </form>
-            {user && user.role === 'ROLE_VETO' && animals.length > 0 && (
+            {user && user.role === 'ROLE_USER' && animals.length > 0 && (
                 <div className="mt-8 w-full max-w-md">
                     <h2 className="text-2xl text-center">Mes Animaux</h2>
                     <ul className="mt-2">
