@@ -1,4 +1,3 @@
-// src/contexts/UserContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -13,7 +12,6 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const token = Cookies.get('token');
-        console.log('Token:', token);
         if (token) {
             axios.post(`${environment.apiUrl}auth/profile`, {}, {
                 headers: {
@@ -29,10 +27,21 @@ export const UserProvider = ({ children }) => {
         } else {
             setLoading(false);
         }
-    }, [Cookies.get('token')]); // Add token as a dependency
+    }, [Cookies.get('token')]);
+
+    const addAnimal = async (animalData) => {
+        const token = Cookies.get('token');
+        if (!token) throw new Error('No token found');
+        const response = await axios.post(`${environment.apiUrl}animals/uploadAnimals`, animalData, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    };
 
     return (
-        <UserContext.Provider value={{ user, setUser, loading, error }}>
+        <UserContext.Provider value={{ user, setUser, loading, error, addAnimal }}>
             {children}
         </UserContext.Provider>
     );

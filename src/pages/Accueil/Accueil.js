@@ -1,10 +1,9 @@
 import './Accueil.css';
 import Cookies from "js-cookie";
-import {useNavigate} from "react-router-dom";
+import BtnBase from "../../components/btn_base/btn_base";
 
 function Accueil({user}) {
     const token = Cookies.get("token");
-    const navigate = useNavigate();
 
     return (
         <main className="flex justify-center flex-col items-center">
@@ -19,23 +18,21 @@ function Accueil({user}) {
             </div>
             <div className='center-col'>
                 <div className='p-Accueil'>
-                O'Poil est là pour vous faciliter la tâche de la prise de rendez-vous à la consultation. 
-                  
+                Que vous soyez un propriétaire d'animal de compagnie à la recherche de soins experts ou un vétérinaire souhaitant proposer vos services, O'Poil est là pour vous faciliter la tâche.    
                 </div>
-                { token ?
+                {token ? (
                     <>
-                        {user && user.role === 'ROLE_USER' ? <button onClick={() => navigate('/demandes/list')} className="accueil">Voir mes demandes</button>
-                            : null
-                        }
-                        {user && user.role === 'ROLE_VETO' ? <button onClick={() => navigate('/posts')} className="accueil">Voir les demandes</button>
-                            : null
-                        }
-                        </>
+                        {user && user.role === 'ROLE_USER' ? 
+                            <BtnBase nav='/demandes/list' name='Voir mes demandes' /> 
+                        : null}
 
-                    :
-
-                    <button className="accueil" onClick={() => navigate('/inscription')}>Inscription</button>
-                }
+                        {user && user.role === 'ROLE_VETO' ? 
+                            <BtnBase nav='/posts' name='Voir les demandes' />
+                        : null}
+                    </>
+                ) : (
+                    <BtnBase nav='/inscription' name='Inscription' />
+                )}
             </div>
         </main>
     );
